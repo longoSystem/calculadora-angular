@@ -46,9 +46,9 @@ export class CalculadoraComponent implements OnInit {
    */
   adicionarNumero(numero: string): void {
     if (this.operacao === null) {
-      //this.numero1 = 
+      this.numero1 = this.concatenarNumero(this.numero1, numero);
     } else {
-      //this.numero2 = 
+      this.numero2 = this.concatenarNumero(this.numero2, numero);
     }
   }
 
@@ -86,24 +86,26 @@ export class CalculadoraComponent implements OnInit {
    * 
    * @param operacao
    */
-  definirOperacao(operacao: string): void {
-    //apenas definide a operacao caso ela nao exista.
-    if (this.operacao === null) {
+   definirOperacao(operacao: string): void {
+    // apenas define a operação caso não exista uma
+  	if (this.operacao === null) {
       this.operacao = operacao;
-    }
+      return;
+  	}
 
-    /* caso operacao definida e numero2 selecionado efetua o calculo da operacao */
-    if (this.numero2 !== null) {
-      this.resultado = this.calculadoraService.calcular(
-        parseFloat(this.numero1), 
-        parseFloat(this.numero2), 
-        operacao);
-    }
-    this.operacao = operacao;
-    this.numero1 = this.resultado.toString();
-    this.numero2 = null;
-    this.resultado = null;
-  } 
+    /* caso operação definida e número 2 selecionado,
+       efetua o cálculo da operação */
+  	if (this.numero2 !== null) {
+  		this.resultado = this.calculadoraService.calcular(
+  			parseFloat(this.numero1), 
+  			parseFloat(this.numero2), 
+  			this.operacao);
+  		this.operacao = operacao;
+  		this.numero1 = this.resultado.toString();
+  		this.numero2 = null;
+  		this.resultado = null;
+  	}
+  }
 
   /**
    * Efetua o calculo de uma operacao.
@@ -112,14 +114,14 @@ export class CalculadoraComponent implements OnInit {
   calcular(): void {
 
     if (this.numero2 === null) {
-      return;
-    }
+  		return;
+  	}
 
     //só entra no comando abaixo se o this.numero2 for diferente de null.
     this.resultado = this.calculadoraService.calcular(
-      parseFloat(this.numero1), 
-      parseFloat(this.numero2), 
-      this.operacao)
+  		parseFloat(this.numero1), 
+  		parseFloat(this.numero2), 
+  		this.operacao);
   }
 
   /**
